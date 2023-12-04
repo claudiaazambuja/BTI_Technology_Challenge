@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Historical.css';
 import { format } from 'date-fns';
-import { FiChevronDown, FiChevronRight} from 'react-icons/fi';
+import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 
 
 const Box2 = () => {
@@ -49,15 +49,22 @@ const Box2 = () => {
           </div>
           {expandedVehicle === vehicle.vehicle_id && (
             <ul className="passages-list">
-              {vehicle.passages.slice(0, 20).map((passage, index) => (
-                <li key={index}>
-                  <div className="passage-info">
-                    <span>Data da Passagem: {format(new Date(passage.passage_date), 'dd/MM/yyyy HH:mm:ss')}</span>
-                    <span>Valor Pago: R$ {passage.passage_fee.toFixed(2)}</span>
-                  </div>
-                  <hr /> {/* Linha separadora */}
-                </li>
-              ))}
+              {vehicle.passages
+                .map((passage, index) => ({
+                  ...passage,
+                  passage_date: new Date(passage.passage_date)
+                })) // Converte as datas para objetos Date
+                .sort((a, b) => b.passage_date - a.passage_date) // Ordena as passagens da data mais nova para a mais antiga
+                .slice(0, 20)
+                .map((passage, index) => (
+                  <li key={index}>
+                    <div className="passage-info">
+                      <span>Data da Passagem: {format(passage.passage_date, 'dd/MM/yyyy HH:mm:ss')}</span>
+                      <span>Valor Pago: R$ {passage.passage_fee.toFixed(2)}</span>
+                    </div>
+                    <hr /> {/* Linha separadora */}
+                  </li>
+                ))}
             </ul>
           )}
         </div>

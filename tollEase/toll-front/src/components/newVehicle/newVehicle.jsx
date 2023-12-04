@@ -14,9 +14,11 @@ const Box3 = () => {
   };
 
   const isPlaqueValid = (plaque) => {
-    const validPlaqueRegex = /^[A-Z]{3}-\d{4}$/;
-    return validPlaqueRegex.test(plaque.toUpperCase());
+    const validPlaqueRegex = /^[A-Z]{3}-\d{1}[A-Z]?\d{2}$/;
+    const normalizedPlaque = plaque.toUpperCase(); // Envia ao banco em maiúsculas
+    return validPlaqueRegex.test(normalizedPlaque);
   };
+
   
 
   const handleSubmit = async () => {
@@ -27,15 +29,12 @@ const Box3 = () => {
 
     try {
       setLoading(true);
-
-  
       const apiUrl = import.meta.env.VITE_APP_URL;
       const response = await axios.post(`${apiUrl}/`, {
         plaque
     });
-     
-
       setError('');
+      window.location.reload();
     } catch (error) {
       console.error('Erro ao enviar a requisição:', error.message);
       setError('Erro ao enviar a requisição. Por favor, tente novamente.');
