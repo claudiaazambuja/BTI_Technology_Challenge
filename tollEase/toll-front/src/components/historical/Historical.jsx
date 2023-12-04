@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Historical.css';
 import { format } from 'date-fns';
+import { FiChevronDown, FiChevronRight} from 'react-icons/fi';
+
 
 const Box2 = () => {
   const [vehiclesInfo, setVehiclesInfo] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showPassages, setShowPassages] = useState(false);
+  const [expandedVehicle, setExpandedVehicle] = useState(null);
 
   const fetchVehiclesInfo = async () => {
     try {
@@ -27,8 +29,8 @@ const Box2 = () => {
     fetchVehiclesInfo();
   }, []);
 
-  const handleTogglePassages = () => {
-    setShowPassages(!showPassages);
+  const handleTogglePassages = (vehicleId) => {
+    setExpandedVehicle(expandedVehicle === vehicleId ? null : vehicleId);
   };
 
   return (
@@ -36,11 +38,16 @@ const Box2 = () => {
       {loading && <p>Carregando informações...</p>}
       {vehiclesInfo.map((vehicle) => (
         <div key={vehicle.vehicle_id} className="vehicle-section">
-          <h2>Informações do Veículo {vehicle.vehicle_id}</h2>
-          <button onClick={handleTogglePassages}>
-            {showPassages ? 'Ocultar Passagens' : 'Mostrar Passagens'}
-          </button>
-          {showPassages && (
+          <div className="vehicle-header">
+            <h2>Informações do Veículo {vehicle.vehicle_id}</h2>
+            <button className="toggle-button" onClick={() => handleTogglePassages(vehicle.vehicle_id)}>
+              {expandedVehicle === vehicle.vehicle_id ? <FiChevronDown /> : <FiChevronRight />}
+            </button>
+            <span className="last-passage">
+              Última Passagem: {format(new Date(vehicle.passages[0]?.passage_date), 'dd/MM/yyyy HH:mm:ss')}
+            </span>
+          </div>
+          {expandedVehicle === vehicle.vehicle_id && (
             <ul className="passages-list">
               {vehicle.passages.slice(0, 20).map((passage, index) => (
                 <li key={index}>
@@ -53,7 +60,6 @@ const Box2 = () => {
               ))}
             </ul>
           )}
-          <button onClick={fetchVehiclesInfo}>Atualizar Informações</button>
         </div>
       ))}
     </div>

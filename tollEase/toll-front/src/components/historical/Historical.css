@@ -2,32 +2,52 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
 }
 
 .vehicle-section {
-  width: 650px;
-  margin: 10px;
-  padding: 20px;
+  margin-bottom: 20px;
   border: 1px solid #ddd;
+  padding: 10px;
   border-radius: 8px;
-  background-color: #f9f9f9;
+}
+
+.vehicle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.vehicle-header h2 {
+  font-size: 18px; /* ou o tamanho desejado */
+}
+.toggle-button {
+  background-color:#4CAF50;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.last-passage {
+  font-style: italic;
+  font-size: 14px;
 }
 
 .passages-list {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
-}
-
-.passages-list li {
-  margin-bottom: 10px;
 }
 
 .passage-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px; /* ou qualquer outra margem desejada */
+  margin-bottom: 8px;
 }
 
-.passage-info span {
-  flex: 1;
+hr {
+  border: 0.5px solid #ddd;
+  margin: 5px 0;
 }
+
