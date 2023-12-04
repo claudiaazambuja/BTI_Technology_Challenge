@@ -11,7 +11,11 @@ async function create(plaque) {
     }
 
     const discount = accumulated_passages !== 0 ? tax(accumulated_passages) : 7.90;
-    await tollRepository.create(plaque, discount, accumulated_passages)
+    const operationId = await tollRepository.create(plaque, discount, accumulated_passages)
+
+    if (accumulated_passages > 10) {
+        await tollRepository.updateDiscountApplied(operationId);
+    }
 }
 
 async function getAllCars() {
@@ -37,5 +41,6 @@ async function updatePlaque(id, newPlaque) {
     const discount = accumulated_passages !== 0 ? tax(accumulated_passages) : 7.90;
 
     await tollRepository.updatePassageData(id, newPlaque, discount, accumulated_passages);
+
 }
 export const tollService = { create, getAllCars, getVehicleByPlaque, updatePlaque }

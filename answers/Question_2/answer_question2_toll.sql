@@ -1,7 +1,7 @@
 -- Table 
 CREATE TABLE TollBooth (
     id SERIAL PRIMARY KEY,
-    vehicle_id INT,
+    vehicle_id VARCHAR(20),
     passage_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     passage_fee DECIMAL(5,2) DEFAULT 7.90,
     accumulated_passages INT,

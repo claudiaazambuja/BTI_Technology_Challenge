@@ -1,12 +1,18 @@
 import { db } from "../database/database.connection.js"
 
 async function create(plaque, discount, accumulated_passages) {
-    await db.query(
+    const result = await db.query(
         `INSERT INTO TollBooth (vehicle_id, passage_fee, accumulated_passages)
-        VALUES ($1, $2, $3);`,
+        VALUES ($1, $2, $3)
+        RETURNING id;`,
         [plaque, discount, accumulated_passages]
+    );
 
-    )
+    // Certifique-se de que o resultado.rows existe e tem pelo menos um item
+    if (result.rows && result.rows.length > 0) {
+        const operationId = result.rows[0].id;
+        return operationId;
+    }
 }
 
 async function verify(plaque) {
@@ -58,4 +64,10 @@ async function updatePassageData(id, newPlaque, discount, accumulated_passages) 
         [newPlaque, discount, accumulated_passages, id]);
 }
 
-export const tollRepository = { create, verify, getAll, getById, getByPlaque, updatePassageData }
+async function updateDiscountApplied(operationId) {
+    await db.query(
+        `UPDATE TollBooth SET discount_applied = true WHERE id = $1;`,
+        [operationId]);
+}
+
+export const tollRepository = { create, verify, getAll, getById, getByPlaque, updatePassageData, updateDiscountApplied }
