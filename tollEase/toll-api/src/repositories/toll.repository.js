@@ -34,8 +34,10 @@ async function getAll() {
     FROM
         TollBooth
     GROUP BY
-        vehicle_id;
-    `
+        vehicle_id
+    ORDER BY
+        vehicle_id ASC, MAX(passage_date) DESC
+    LIMIT 20;`
     );
 }
 

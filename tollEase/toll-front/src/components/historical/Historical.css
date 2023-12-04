@@ -1,7 +1,33 @@
 .box2 {
-    width: 100%;
-    height: 65px;
-    border-radius: 20px;
-    background-color: #e0e0e0;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vehicle-section {
+  width: 650px;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.passages-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.passages-list li {
+  margin-bottom: 10px;
+}
+
+.passage-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; /* ou qualquer outra margem desejada */
+}
+
+.passage-info span {
+  flex: 1;
+}
