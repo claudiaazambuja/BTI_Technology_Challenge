@@ -14,7 +14,7 @@ const Box3 = () => {
   };
 
   const isPlaqueValid = (plaque) => {
-    const validPlaqueRegex = /^[A-Z]{3}-\d{1}[A-Z]?\d{2}$/;
+    const validPlaqueRegex = /^[A-Za-z]{3}-\d{1}[A-Za-z]?\d{2,3}$/;
     const normalizedPlaque = plaque.toUpperCase(); // Envia ao banco em maiúsculas
     return validPlaqueRegex.test(normalizedPlaque);
   };
