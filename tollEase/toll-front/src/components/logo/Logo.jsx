@@ -3,7 +3,7 @@ import './Logo.css';
 import logoImage from '../../assets/bti-preview.png'
 
 
-const Box1 = () => {
+export default function Logo(){
   return (
     <div className="box1">
       <img src={logoImage} alt="Logo" />
@@ -11,4 +11,3 @@ const Box1 = () => {
   );
 };
 
-export default Box1;

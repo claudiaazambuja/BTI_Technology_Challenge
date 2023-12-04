@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './newVehicle.css';
 
-const Box3 = () => {
+export default function NewVehicle(){
   const [plaque, setPlaque] = useState('ABC-1234');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,8 +18,6 @@ const Box3 = () => {
     const normalizedPlaque = plaque.toUpperCase(); // Envia ao banco em maiúsculas
     return validPlaqueRegex.test(normalizedPlaque);
   };
-
-  
 
   const handleSubmit = async () => {
     if (!isPlaqueValid(plaque)) {
@@ -61,4 +59,3 @@ const Box3 = () => {
   );
 };
 
-export default Box3;

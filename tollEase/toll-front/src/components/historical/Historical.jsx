@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 
 
-const Box2 = () => {
+export default function Historical(){
   const [vehiclesInfo, setVehiclesInfo] = useState([]);
   const [loading, setLoading] = useState(false);
   const [expandedVehicle, setExpandedVehicle] = useState(null);
@@ -13,10 +13,8 @@ const Box2 = () => {
   const fetchVehiclesInfo = async () => {
     try {
       setLoading(true);
-
       const apiUrl = import.meta.env.VITE_APP_URL;
       const response = await axios.get(`${apiUrl}/`);
-
       setVehiclesInfo(response.data.rows || []);
     } catch (error) {
       console.error('Erro ao obter informações dos veículos:', error.message);
@@ -25,9 +23,7 @@ const Box2 = () => {
     }
   };
 
-  useEffect(() => {
-    fetchVehiclesInfo();
-  }, []);
+  useEffect(() => {fetchVehiclesInfo();}, []);
 
   const handleTogglePassages = (vehicleId) => {
     setExpandedVehicle(expandedVehicle === vehicleId ? null : vehicleId);
@@ -79,4 +75,3 @@ const Box2 = () => {
   );
 };
 
-export default Box2;
