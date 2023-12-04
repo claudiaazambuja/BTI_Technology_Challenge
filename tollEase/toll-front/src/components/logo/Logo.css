@@ -1,0 +1,14 @@
+.box1 {
+  width: 200px; 
+  height: 150px; 
+  /* background-color: #3392b2; */
+  margin: 0 auto; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box1 img {
+  max-width: 100%; 
+  max-height: 100%; 
+}
