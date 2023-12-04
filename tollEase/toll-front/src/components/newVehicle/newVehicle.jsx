@@ -28,7 +28,7 @@ const Box3 = () => {
     try {
       setLoading(true);
 
-      // Substitua VITE_APP_URL pela sua variável de ambiente real
+  
       const apiUrl = import.meta.env.VITE_APP_URL;
       const response = await axios.post(`${apiUrl}/`, {
         plaque

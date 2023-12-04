@@ -4,7 +4,7 @@ const joi = joiBase.extend(joiDate);
 
 export const plaqueSchema = joi.object({
     plaque: joi.string()
-        .pattern(/^[A-Z]{3}-\d{4}$/) // Assumindo um formato padrão AAA-1234, ajuste conforme necessário
+        .pattern(/^[A-Z]{3}-\d{4}$/) // Assumindo um formato padrão AAA-1234 | AAA-1A11, ajuste conforme necessário
         .required()
         .messages({
             'string.base': `"Número de placa" deve ser uma string.`,
