@@ -1,10 +1,14 @@
-import joiBase from "joi"
-import joiDate from "@joi/date"
-const joi = joiBase.extend(joiDate)
+import joiBase from "joi";
+import joiDate from "@joi/date";
+const joi = joiBase.extend(joiDate);
 
 export const plaqueSchema = joi.object({
-    plaque: joi.string().required().messages({
-        'string.base': `"N[umero de placa" é um campo do tipo número referente a um carro.`,
-        'any.required': `O campo "Quantidade de viagens" é obrigatório.`
-    })
- })
+    plaque: joi.string()
+        .pattern(/^[A-Z]{3}-\d{4}$/) // Assumindo um formato padrão AAA-1234, ajuste conforme necessário
+        .required()
+        .messages({
+            'string.base': `"Número de placa" deve ser uma string.`,
+            'string.pattern.base': `O formato da placa deve ser AAA-1234.`,
+            'any.required': `O campo "Número de placa" é obrigatório.`
+        })
+});
