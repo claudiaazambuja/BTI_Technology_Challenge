@@ -10,7 +10,6 @@ async function create(req, res) {
 async function allCars(req, res) {
     const cars = await tollService.getAllCars()
     res.status(httpStatus.OK).send(cars);
-
 }
 
 async function getByPlaque(req, res) {
@@ -19,5 +18,12 @@ async function getByPlaque(req, res) {
     res.status(httpStatus.OK).send(vehicle);
 }
 
-export const tollController = { create, allCars, getByPlaque }
+async function updatePlaque(req, res) {
+    const { id } = req.params;
+    const { newPlaque } = req.body;
+    await tollService.updatePlaque(id, newPlaque);
+    res.status(httpStatus.OK).send('Placa atualizada com sucesso!');
+}
+
+export const tollController = { create, allCars, getByPlaque, updatePlaque }
 

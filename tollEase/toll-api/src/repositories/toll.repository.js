@@ -33,6 +33,10 @@ async function getAll() {
     );
 }
 
+async function getById(id) {
+    return await db.query('SELECT * FROM TollBooth WHERE id = $1', [id]);
+}
+
 async function getByPlaque(plaque) {
     return await db.query(
         `SELECT
@@ -48,5 +52,10 @@ async function getByPlaque(plaque) {
     );
 }
 
+async function updatePassageData(id, newPlaque, discount, accumulated_passages) {
+    await db.query(
+        'UPDATE TollBooth SET vehicle_id = $1, passage_fee = $2, accumulated_passages = $3 WHERE id = $4',
+        [newPlaque, discount, accumulated_passages, id]);
+}
 
-export const tollRepository = { create, verify, getAll, getByPlaque }
+export const tollRepository = { create, verify, getAll, getById, getByPlaque, updatePassageData }

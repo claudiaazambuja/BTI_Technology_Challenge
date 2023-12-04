@@ -9,6 +9,6 @@ const tollRouter = Router()
 tollRouter.post("/", validateSchema(plaqueSchema), tollController.create )
 tollRouter.get("/", tollController.allCars)
 tollRouter.get("/:plaque", tollController.getByPlaque )
-tollRouter.put("/:plaque", )
+tollRouter.put("/:id", tollController.updatePlaque )
 
 export default tollRouter
