@@ -2,10 +2,10 @@
 CREATE TABLE TollBooth (
     id SERIAL PRIMARY KEY,
     vehicle_id INT,
-    passage_date DATE,
-    passage_fee DECIMAL(5,2),
+    passage_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    passage_fee DECIMAL(5,2) DEFAULT 7.90,
     accumulated_passages INT,
-    discount_applied BOOLEAN
+    discount_applied BOOLEAN DEFAULT FALSE
 );
 
 
