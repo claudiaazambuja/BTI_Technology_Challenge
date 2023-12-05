@@ -7,9 +7,10 @@
 
 .vehicle-section {
   margin-bottom: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #050505;
   padding: 10px;
   border-radius: 8px;
+  width: 60%;
 }
 
 .vehicle-header {
@@ -18,13 +19,14 @@
   justify-content: space-between;
 }
 .vehicle-header h2 {
-  font-size: 18px; /* ou o tamanho desejado */
+  font-size: 18px; 
 }
 .toggle-button {
-  background-color:#4CAF50;
+  background-color:#F15929;
   color: #fff;
   border: none;
   padding: 8px;
+  margin: 10px;
   cursor: pointer;
   border-radius: 4px;
   margin-left: 10px;

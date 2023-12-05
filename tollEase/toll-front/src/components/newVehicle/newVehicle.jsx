@@ -53,7 +53,7 @@ export default function NewVehicle(){
       />
       {error && <div className="error">{error}</div>}
       <button onClick={handleSubmit} disabled={loading}>
-        Enviar Requisição
+        Adicionar nova passagem
       </button>
     </div>
   );

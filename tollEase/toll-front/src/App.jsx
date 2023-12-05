@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import React from 'react';
 import MainBox from './pages/MainBox/MainBox.jsx';
 
-
 function App() {
   return (
     <BrowserRouter>
