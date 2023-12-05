@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './newVehicle.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default function NewVehicle() {
   const [plaque, setPlaque] = useState('ABC-1234');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [lastPlaque, setLastPlaque] = useState(null);
 
   const handleInputChange = (e) => {
     const newPlaque = e.target.value;
@@ -25,17 +28,23 @@ export default function NewVehicle() {
       setError('Placa inválida. Por favor, insira uma placa válida.');
       return;
     }
-
     try {
       setLoading(true);
       const apiUrl = import.meta.env.VITE_APP_URL;
-      await axios.post(`${apiUrl}/`, {
+      const response = await axios.post(`${apiUrl}/`, {
         plaque: normalizedPlaque,
       });
+      const newOperationId = response.data.id;
+      localStorage.setItem('id', newOperationId);
       setError('');
-      setLastPlaque(normalizedPlaque);
-      console.log(lastPlaque)
-      // window.location.reload();
+      toast.success('Passagem adicionada com sucesso!', {
+        autoClose: 5000,
+        onClose: () => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000); 
+        },
+      });
     } catch (error) {
       console.error('Erro ao enviar a requisição:', error.message);
       setError('Erro ao enviar a requisição. Por favor, tente novamente.');
@@ -45,23 +54,46 @@ export default function NewVehicle() {
   };
 
   const handleUpdatePassage = async () => {
-    console.log(lastPlaque)
-    if (!lastPlaque) {
+    const storedId = localStorage.getItem('id');
+    if (!storedId) {
       setError('Não há uma última passagem para atualizar.');
       return;
     }
-
     try {
       setLoading(true);
       const normalizedPlaque = plaque.toUpperCase();
       const apiUrl = import.meta.env.VITE_APP_URL;
 
-      await axios.put(`${apiUrl}/${lastPlaque}`, {
-        newPlaque: normalizedPlaque,
-      });
+      confirmAlert({
+        title: 'Confirmação',
+        message: 'A última passagem será excluída, e a nova será inserida no lugar e atualizações serão feitas. Deseja continuar?',
+        buttons: [
+          {
+            label: 'Sim',
+            onClick: async () => {
+              await axios.put(`${apiUrl}/`, {
+                id: storedId,
+                plaque: normalizedPlaque,
+              });
 
-      setError('');
-      window.location.reload();
+              setError('');
+              toast.success('Passagem atualizada com sucesso!', {
+                autoClose: 3000, 
+                onClose: () => {
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 1000); 
+                },
+              });
+            },
+          },
+          {
+            label: 'Não',
+            onClick: () => {
+            },
+          },
+        ],
+      });
     } catch (error) {
       console.error('Erro ao enviar a requisição:', error.message);
       setError('Erro ao enviar a requisição. Por favor, tente novamente.');
@@ -82,12 +114,13 @@ export default function NewVehicle() {
       />
       {error && <div className="error">{error}</div>}
       <div className="button-container">
-      <button onClick={handleAddPassage} disabled={loading}>
-        Adicionar nova passagem
-      </button>
-      <button onClick={handleUpdatePassage} disabled={loading}>
-        Atualizar
-      </button>
+        <ToastContainer />
+        <button onClick={handleAddPassage} disabled={loading} className="add-button">
+          Adicionar nova passagem
+        </button>
+        <button onClick={handleUpdatePassage} disabled={loading} className="update-button">
+          Atualizar
+        </button>
       </div>
     </div>
   );

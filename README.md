@@ -3,6 +3,4 @@ Welcome to the BTI Technology Coding Challenge repository! 🚀 This challenge i
 
 
 Deploy:
-[FREESHOP-Calculator](https://bti-technology-challenge.vercel.app/)
-
 [tollEase](https://bti-technology-challenge-xabf.vercel.app/)
