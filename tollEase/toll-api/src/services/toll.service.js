@@ -5,10 +5,9 @@ async function create(plaque) {
     const result = await tollRepository.verify(plaque) //verificar se existe a placa, e se existir retornar o valor de passage_fee e accumulated_passages
     let accumulated_passages = 0;
     let passage_fee = 0
-    if (result.rows.length > 0) {
-        accumulated_passages = result.rows[0].accumulated_passages + 1;
-        passage_fee = result.rows[0].passage_fee;
-    }
+    
+    accumulated_passages = result.rows.length > 0 ? (new Date().getDate() === 1 ? 1 : result.rows[0].accumulated_passages + 1) : 0;
+    passage_fee = result.rows.length > 0 ? result.rows[0].passage_fee : 0;
 
     const discount = accumulated_passages !== 0 ? tax(accumulated_passages) : 7.90;
     const operationId = await tollRepository.create(plaque, discount, accumulated_passages)

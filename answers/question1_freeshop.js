@@ -3,12 +3,13 @@ function calcularTrocoFreeshop(valorGasto, valorPago, taxaDolar) {
     let trocoDolares = trocoReais / taxaDolar;
 
     const notasMoedasDolares = [100, 50, 20, 10, 5, 1, 0.5, 0.25, 0.10, 0.05, 0.01];
-    const resultado = {};
+    const resultado = [];
 
     notasMoedasDolares.forEach(notaMoedaDolar => {
         const qtdNotasMoedasDolares = Math.floor(trocoDolares / notaMoedaDolar);
         if (qtdNotasMoedasDolares > 0) {
-            resultado[notaMoedaDolar] = qtdNotasMoedasDolares;
+            const tipo = notaMoedaDolar > 1 ? "nota" : "moeda";
+            resultado.push(`${qtdNotasMoedasDolares} ${tipo}(s) de ${notaMoedaDolar}`);
             trocoDolares = trocoDolares % notaMoedaDolar;
         }
     });
@@ -16,9 +17,9 @@ function calcularTrocoFreeshop(valorGasto, valorPago, taxaDolar) {
     return resultado;
 }
 
-// Exemplo de uso
+// Exemplo para o teste
 const despesaReais = 37;
-const pagamentoReais = 50;
-const taxaDolar = 2.75; // Exemplo de taxa de câmbio
+const pagamentoReais = 120;
+const taxaDolar = 4.93; // Taxa de câmbio do dia 5/12
 const trocoFreeshop = calcularTrocoFreeshop(despesaReais, pagamentoReais, taxaDolar);
-console.log(trocoFreeshop);
+console.log("Resultado algoritmo:", trocoFreeshop);
