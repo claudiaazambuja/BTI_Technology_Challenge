@@ -8,7 +8,6 @@ CREATE TABLE TollBooth (
     discount_applied BOOLEAN DEFAULT FALSE
 );
 
-
 -- Command to insert 
 INSERT INTO TollBooth (vehicle_id, passage_date, passage_fee, accumulated_passages, discount_applied) 
 VALUES 
@@ -24,6 +23,12 @@ VALUES
 SELECT *
 FROM TollBooth
 WHERE vehicle_id = 1;
+
+-- Comando para atualizar o estado se o desconto foi aplicado
+
+UPDATE TollBooth 
+SET discount_applied = true 
+WHERE id = $1;
 
 URL = postgres://barxvapl:ryZ-pu5OnhVXr5hRgc_85nuizQjwDDRH@bubble.db.elephantsql.com/barxvapl
 
