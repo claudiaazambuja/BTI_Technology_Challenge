@@ -1,0 +1,26 @@
+/* Adicione essas regras ao seu arquivo de estilo CSS */
+
+/* Estilo para os campos de entrada */
+.calculator input {
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  /* Estilo para o campo de expressão */
+  .calculator input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 16px;
+    text-align: right;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .calculator input[type="text"]:read-only {
+    background-color: #fff;
+  }
+  

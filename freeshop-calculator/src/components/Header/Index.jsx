@@ -2,6 +2,6 @@ import React from 'react';
 import './Index.css';
 
 export default function Header() {
-  return <div className="index">Box 2 (Ocupa Toda Largura)</div>;
+  return <div className="index">Aqui vai o relogio e o dolar (Ocupa Toda Largura)</div>;
 };
 
