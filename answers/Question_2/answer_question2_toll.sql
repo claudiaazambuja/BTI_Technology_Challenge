@@ -25,20 +25,6 @@ SELECT *
 FROM TollBooth
 WHERE vehicle_id = 1;
 
--- Atualização para garantir que o desconto aplicado não ultrapasse 20% ou o valor mínimo de 1,58 (o que for maior)
--- UPDATE TollBooth
--- SET
---     accumulated_discount = 
---         CASE
---             WHEN accumulated_passages >= 10 AND discount_applied = FALSE THEN
---                 LEAST(passage_fee * 0.20, accumulated_passages / 10 * 0.05 * passage_fee)
---             ELSE
---                 accumulated_discount
---         END,
---     discount_applied = TRUE
--- WHERE accumulated_passages >= 10 AND discount_applied = FALSE;
-
-
 URL = postgres://barxvapl:ryZ-pu5OnhVXr5hRgc_85nuizQjwDDRH@bubble.db.elephantsql.com/barxvapl
 
 
