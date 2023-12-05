@@ -1,18 +1,17 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import React from 'react';
-import { HashRouter as Router, Route} from 'react-router-dom';
+import MainBox from './pages/MainBox/MainBox.jsx';
 
-console.log('Rendering App component');
 
 function App() {
   return (
-    <Router>
-      <Route exact path="/" component={Block1View} />
-    </Router>
+    <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainBox />} />
+          <Route path="/*" element={<Navigate to="/" replace />} />
+        </Routes>
+    </BrowserRouter>
   );
 };
-
-
-
-
 
 export default App;
