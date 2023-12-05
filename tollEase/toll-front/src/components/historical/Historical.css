@@ -30,6 +30,30 @@
   cursor: pointer;
   border-radius: 4px;
   margin-left: 10px;
+
+  position: absolute;
+  left: 51%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 1472px) {
+  .toggle-button {
+    left: 51%;
+    transform: translateX(750%);
+  }
+}
+
+@media (max-width: 1150px) {
+  .toggle-button {
+    left: 51%;
+    transform: translateX(650%);
+  }
+}
+@media (max-width: 1150px) {
+  .toggle-button {
+    left: 51%;
+    transform: translateX(450%);
+  }
 }
 
 .last-passage {

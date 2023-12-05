@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './newVehicle.css';
 
-export default function NewVehicle(){
+export default function NewVehicle() {
   const [plaque, setPlaque] = useState('ABC-1234');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -13,14 +13,14 @@ export default function NewVehicle(){
     setError('');
   };
 
-  const isPlaqueValid = (plaque) => {
+  const isValidPlaque = (plaque) => {
     const validPlaqueRegex = /^[A-Za-z]{3}-\d{1}[A-Za-z]?\d{2,3}$/;
-    const normalizedPlaque = plaque.toUpperCase(); // Envia ao banco em maiúsculas
-    return validPlaqueRegex.test(normalizedPlaque);
+    return validPlaqueRegex.test(plaque);
   };
 
   const handleSubmit = async () => {
-    if (!isPlaqueValid(plaque)) {
+    const normalizedPlaque = plaque.toUpperCase();
+    if (!isValidPlaque(normalizedPlaque)) {
       setError('Placa inválida. Por favor, insira uma placa válida.');
       return;
     }
@@ -29,8 +29,8 @@ export default function NewVehicle(){
       setLoading(true);
       const apiUrl = import.meta.env.VITE_APP_URL;
       const response = await axios.post(`${apiUrl}/`, {
-        plaque
-    });
+        plaque: normalizedPlaque,
+      });
       setError('');
       window.location.reload();
     } catch (error) {
@@ -57,5 +57,4 @@ export default function NewVehicle(){
       </button>
     </div>
   );
-};
-
+}
