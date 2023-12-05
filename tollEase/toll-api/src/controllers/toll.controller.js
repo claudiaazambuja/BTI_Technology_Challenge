@@ -3,8 +3,8 @@ import { tollService } from "../services/toll.service.js"
 
 async function create(req, res) {
     const { plaque } = req.body
-    await tollService.create(plaque)
-    res.sendStatus(httpStatus.OK)
+    const result = await tollService.create(plaque)
+    res.status(httpStatus.OK).send(result)
 }
 
 async function allCars(req, res) {
@@ -19,9 +19,9 @@ async function getByPlaque(req, res) {
 }
 
 async function updatePlaque(req, res) {
-    const { id } = req.params;
-    const { newPlaque } = req.body;
-    await tollService.updatePlaque(id, newPlaque);
+    const { id, plaque } = req.body;
+    console.log(id, plaque)
+    await tollService.updatePlaque(id, plaque);
     res.status(httpStatus.OK).send('Placa atualizada com sucesso!');
 }
 

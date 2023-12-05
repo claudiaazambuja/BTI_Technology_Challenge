@@ -16,6 +16,9 @@ async function create(plaque) {
     if (accumulated_passages > 10) {
         await tollRepository.updateDiscountApplied(operationId);
     }
+    return {
+        id: operationId,
+    };
 }
 
 async function getAllCars() {
@@ -28,19 +31,21 @@ async function getVehicleByPlaque(plaque) {
     return result.rows;
 }
 
-async function updatePlaque(id, newPlaque) {
-    const historyResult = await tollRepository.getById(id);
+async function updatePlaque(id, plaque) {
+    const historyResult = await tollRepository.getLatestPassageInfoByPlaque(plaque);
+    console.log(historyResult)
     let accumulated_passages = 0;
     let passage_fee = 0
-
-    if (historyResult.rows.length > 0) {
-        accumulated_passages = historyResult.rows[0].accumulated_passages + 1;
-        passage_fee = historyResult.rows[0].passage_fee;
+      if (historyResult) {
+        accumulated_passages = historyResult.accumulated_passages + 1;
+        passage_fee = historyResult.passage_fee;
     }
 
-    const discount = accumulated_passages !== 0 ? tax(accumulated_passages) : 7.90;
+    console.log(id, plaque, accumulated_passages, passage_fee);
 
-    await tollRepository.updatePassageData(id, newPlaque, discount, accumulated_passages);
+    const discount = accumulated_passages !== 0 ? tax(accumulated_passages) : 7.90;
+ 
+    await tollRepository.updatePassageData(id, plaque, discount, accumulated_passages);
 
 }
 export const tollService = { create, getAllCars, getVehicleByPlaque, updatePlaque }
