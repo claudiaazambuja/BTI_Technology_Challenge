@@ -18,7 +18,7 @@ function calcularTrocoFreeshop(valorGasto, valorPago, taxaDolar) {
 }
 
 // Exemplo para o teste
-const despesaReais = 37;
+const despesaReais = 80;
 const pagamentoReais = 120;
 const taxaDolar = 4.93; // Taxa de câmbio do dia 5/12
 const trocoFreeshop = calcularTrocoFreeshop(despesaReais, pagamentoReais, taxaDolar);

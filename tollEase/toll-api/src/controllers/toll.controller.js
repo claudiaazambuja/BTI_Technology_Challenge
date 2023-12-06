@@ -2,8 +2,8 @@ import httpStatus from "http-status"
 import { tollService } from "../services/toll.service.js"
 
 async function create(req, res) {
-    const { plaque } = req.body
-    const result = await tollService.create(plaque)
+    const { plate } = req.body
+    const result = await tollService.create(plate)
     res.status(httpStatus.OK).send(result)
 }
 
@@ -12,18 +12,18 @@ async function allCars(req, res) {
     res.status(httpStatus.OK).send(cars);
 }
 
-async function getByPlaque(req, res) {
-    const { plaque } = req.params;
-    const vehicle = await tollService.getVehicleByPlaque(plaque);
+async function getByPlate(req, res) {
+    const { plate } = req.params;
+    const vehicle = await tollService.getVehicleByPlate(plate);
     res.status(httpStatus.OK).send(vehicle);
 }
 
-async function updatePlaque(req, res) {
-    const { id, plaque } = req.body;
-    console.log(id, plaque)
-    await tollService.updatePlaque(id, plaque);
+async function updatePlate(req, res) {
+    const { id, plate } = req.body;
+    console.log(id, plate)
+    await tollService.updatePlate(id, plate);
     res.status(httpStatus.OK).send('Placa atualizada com sucesso!');
 }
 
-export const tollController = { create, allCars, getByPlaque, updatePlaque }
+export const tollController = { create, allCars, getByPlate, updatePlate }
 

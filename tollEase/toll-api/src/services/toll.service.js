@@ -1,8 +1,8 @@
 import { tollRepository } from "../repositories/toll.repository.js";
 import tax from "../utils/tax.js";
 
-async function create(plaque) {
-    const result = await tollRepository.verify(plaque) //verificar se existe a placa, e se existir retornar o valor de passage_fee e accumulated_passages
+async function create(plate) {
+    const result = await tollRepository.verify(plate) //verificar se existe a placa, e se existir retornar o valor de passage_fee e accumulated_passages
     let accumulated_passages = 0;
     let passage_fee = 0
     
@@ -10,7 +10,7 @@ async function create(plaque) {
     passage_fee = result.rows.length > 0 ? result.rows[0].passage_fee : 0;
 
     const discount = accumulated_passages !== 0 ? tax(accumulated_passages) : 7.90;
-    const operationId = await tollRepository.create(plaque, discount, accumulated_passages)
+    const operationId = await tollRepository.create(plate, discount, accumulated_passages)
 
     if (accumulated_passages > 10) {
         await tollRepository.updateDiscountApplied(operationId);
@@ -24,14 +24,14 @@ async function getAllCars() {
     return await tollRepository.getAll()
 }
 
-async function getVehicleByPlaque(plaque) {
-    const result = await tollRepository.getByPlaque(plaque);
+async function getVehicleByPlate(plate) {
+    const result = await tollRepository.getByPlate(plate);
     if (result.rows.length === 0) throw new Error("Veículo não encontrado.");  
     return result.rows;
 }
 
-async function updatePlaque(id, plaque) {
-    const historyResult = await tollRepository.getLatestPassageInfoByPlaque(plaque);
+async function updatePlate(id, plate) {
+    const historyResult = await tollRepository.getLatestPassageInfoByPlate(plate);
     console.log(historyResult)
     let accumulated_passages = 0;
     let passage_fee = 0
@@ -40,11 +40,11 @@ async function updatePlaque(id, plaque) {
         passage_fee = historyResult.passage_fee;
     }
 
-    console.log(id, plaque, accumulated_passages, passage_fee);
+    console.log(id, plate, accumulated_passages, passage_fee);
 
     const discount = accumulated_passages !== 0 ? tax(accumulated_passages) : 7.90;
  
-    await tollRepository.updatePassageData(id, plaque, discount, accumulated_passages);
+    await tollRepository.updatePassageData(id, plate, discount, accumulated_passages);
 
 }
-export const tollService = { create, getAllCars, getVehicleByPlaque, updatePlaque }
+export const tollService = { create, getAllCars, getVehicleByPlate, updatePlate }

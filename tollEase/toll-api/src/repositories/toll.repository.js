@@ -1,11 +1,11 @@
 import { db } from "../database/database.connection.js"
 
-async function create(plaque, discount, accumulated_passages) {
+async function create(plate, discount, accumulated_passages) {
     const result = await db.query(
         `INSERT INTO TollBooth (vehicle_id, passage_fee, accumulated_passages)
         VALUES ($1, $2, $3)
         RETURNING id;`,
-        [plaque, discount, accumulated_passages]
+        [plate, discount, accumulated_passages]
     );
 
     if (result.rows && result.rows.length > 0) {
@@ -14,28 +14,26 @@ async function create(plaque, discount, accumulated_passages) {
     }
 }
 
-async function verify(plaque) {
+async function verify(plate) {
     return await db.query(
         `SELECT accumulated_passages, passage_fee
          FROM TollBooth 
          WHERE vehicle_id = $1
          ORDER BY passage_date DESC
          LIMIT 1;`,
-        [plaque]
+        [plate]
     );
 }
 
 async function getAll() {
     return await db.query(
-        `SELECT
+    `SELECT
         vehicle_id,
         jsonb_agg(jsonb_build_object('passage_date', passage_date, 'passage_fee', passage_fee)) as passages
     FROM
         TollBooth
     GROUP BY
         vehicle_id
-    ORDER BY
-        vehicle_id ASC, MAX(passage_date) DESC
     LIMIT 20;`
     );
 }
@@ -44,7 +42,7 @@ async function getById(id) {
     return await db.query('SELECT * FROM TollBooth WHERE id = $1', [id]);
 }
 
-async function getByPlaque(plaque) {
+async function getByPlate(plate) {
     return await db.query(
         `SELECT
             jsonb_build_object('passage_date', passage_date, 'passage_fee', passage_fee) as passage
@@ -55,22 +53,22 @@ async function getByPlaque(plaque) {
          ORDER BY
             passage_date;
         `,
-        [plaque]
+        [plate]
     );
 }
 
-async function getLatestPassageInfoByPlaque(plaque) {
+async function getLatestPassageInfoByPlate(plate) {
     const result = await db.query(
         'SELECT accumulated_passages, passage_fee FROM TollBooth WHERE vehicle_id = $1 ORDER BY passage_date DESC LIMIT 1',
-        [plaque]
+        [plate]
     );
     return result.rows[0];
 }
 
-async function updatePassageData(id, plaque, discount, accumulated_passages) {
+async function updatePassageData(id, plate, discount, accumulated_passages) {
     await db.query(
         'UPDATE TollBooth SET vehicle_id = $1, passage_fee = $2, accumulated_passages = $3 WHERE id = $4',
-        [plaque, discount, accumulated_passages, id]);
+        [plate, discount, accumulated_passages, id]);
 }
 
 async function updateDiscountApplied(operationId) {
@@ -79,4 +77,4 @@ async function updateDiscountApplied(operationId) {
         [operationId]);
 }
 
-export const tollRepository = { create, verify, getAll, getById, getByPlaque, updatePassageData, updateDiscountApplied, getLatestPassageInfoByPlaque }
+export const tollRepository = { create, verify, getAll, getById, getByPlate, updatePassageData, updateDiscountApplied, getLatestPassageInfoByPlate }

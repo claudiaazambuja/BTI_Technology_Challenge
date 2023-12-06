@@ -7,42 +7,43 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default function NewVehicle() {
-  const [plaque, setPlaque] = useState('ABC-1234');
+  const [plate, setPlate] = useState('AAA-1E34');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
-    const newPlaque = e.target.value;
-    setPlaque(newPlaque);
+    const newPlate = e.target.value;
+    setPlate(newPlate);
     setError('');
   };
 
-  const isValidPlaque = (plaque) => {
-    const validPlaqueRegex = /^[A-Za-z]{3}-\d{1}[A-Za-z]?\d{2,3}$/;
-    return validPlaqueRegex.test(plaque);
+  const isValidPlate = (plate) => {
+    const validPlateRegex = /^[A-Z]{3}-\d{1}[A-Z]?\d{2,3}$/;
+    return validPlateRegex.test(plate);
   };
 
   const handleAddPassage = async () => {
-    const normalizedPlaque = plaque.toUpperCase();
-    if (!isValidPlaque(normalizedPlaque)) {
+    const normalizedPlate = plate.toUpperCase();
+    if (!isValidPlate(normalizedPlate)) {
       setError('Placa inválida. Por favor, insira uma placa válida.');
       return;
     }
     try {
       setLoading(true);
       const apiUrl = import.meta.env.VITE_APP_URL;
+      console.log(plate)
       const response = await axios.post(`${apiUrl}/`, {
-        plaque: normalizedPlaque,
+        plate: normalizedPlate,
       });
       const newOperationId = response.data.id;
       localStorage.setItem('id', newOperationId);
       setError('');
       toast.success('Passagem adicionada com sucesso!', {
-        autoClose: 5000,
+        autoClose: 4000,
         onClose: () => {
           setTimeout(() => {
             window.location.reload();
-          }, 1000); 
+          }, 4000); 
         },
       });
     } catch (error) {
@@ -61,7 +62,7 @@ export default function NewVehicle() {
     }
     try {
       setLoading(true);
-      const normalizedPlaque = plaque.toUpperCase();
+      const normalizedPlate = plate.toUpperCase();
       const apiUrl = import.meta.env.VITE_APP_URL;
 
       confirmAlert({
@@ -73,7 +74,7 @@ export default function NewVehicle() {
             onClick: async () => {
               await axios.put(`${apiUrl}/`, {
                 id: storedId,
-                plaque: normalizedPlaque,
+                plate: normalizedPlate,
               });
 
               setError('');
@@ -82,7 +83,7 @@ export default function NewVehicle() {
                 onClose: () => {
                   setTimeout(() => {
                     window.location.reload();
-                  }, 1000); 
+                  }, 4000); 
                 },
               });
             },
@@ -104,11 +105,11 @@ export default function NewVehicle() {
 
   return (
     <div className="box3">
-      <label htmlFor="plaqueInput">Placa:</label>
+      <label htmlFor="plateInput">Placa:</label>
       <input
         type="text"
-        id="plaqueInput"
-        value={plaque}
+        id="plateInput"
+        value={plate}
         onChange={handleInputChange}
         disabled={loading}
       />
